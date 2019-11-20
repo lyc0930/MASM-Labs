@@ -2,7 +2,7 @@
 
 将`Microsoft Macro Assembler.zip`其复制到`\Visual Studio 2017\Templates\ProjectTemplates`目录下即可在Visual Studio 2017中使用。
 
-![]()
+![](https://github.com/lyc0930/MASM-Labs/blob/master/Template/Project.png)
 
 在使用前请按教程中
 

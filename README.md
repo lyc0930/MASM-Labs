@@ -11,10 +11,10 @@ Visual Studio Professional 2017 MASM
 
 参考Kip Irvine教授*Assembly Language for x86 Processors*一书的[运行教程](http://kipirvine.com/asm/gettingStartedVS2017/)与代码实例，受益匪浅。
 ***
-[Microsoft Macro Assembler.zip]()是个人导出的Visual Studio MASM项目模板文件。
+[Microsoft Macro Assembler.zip](https://github.com/lyc0930/MASM-Labs/tree/master/Template)是个人导出的Visual Studio MASM项目模板文件。
 
 ## 实验内容
-### [输入输出]()
+### [输入输出](https://github.com/lyc0930/MASM-Labs/tree/master/IO)
 2019.11.20
 #### 实验目的
 - 掌握汇编程序的基本编写方式
@@ -24,7 +24,7 @@ Visual Studio Professional 2017 MASM
 2. 使用键盘输入一个包含大写字母、小写字母和数字的字符串，并将这个字符串写入文件中
 3. 读取这个文件，将小写字母转换成大写形式，大写字母和数字保持不变，最后整个字符串输出到屏幕，并写入`Output1.txt`文件
 
-### [分支程序设计]()
+### [分支程序设计](https://github.com/lyc0930/MASM-Labs/tree/master/Branch)
 11.20
 #### 实验目的
 - 掌握汇编语言中比较和跳转命令
