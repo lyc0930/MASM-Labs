@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27034.0	    11/27/19 18:22:59
+Microsoft (R) Macro Assembler Version 14.16.27034.0	    11/27/19 19:12:58
 Sort.asm						     Page 1 - 1
 
 
@@ -25,14 +25,14 @@ Sort.asm						     Page 1 - 1
 			      C .LIST
 			      C 
 
- = 000001F4			BufferSize = 500
+ = 0000012C			BufferSize = 300
  = 00000064			ArraySize = 100
 
  00000000			.data
- 00000000  000001F4 [		Buffer 			BYTE 	BufferSize DUP(?)
+ 00000000  0000012C [		Buffer 			BYTE 	BufferSize DUP(?)
 	    00
 	   ]
- 000001F4 44 3A 5C 70 72	Infile  		BYTE 	"D:\private\File\课程相关\微机原理与系统\Experiment\MASM-Labs\Sort\Input3.txt", 0
+ 0000012C 44 3A 5C 70 72	Infile  		BYTE 	"D:\private\File\课程相关\微机原理与系统\Experiment\MASM-Labs\Sort\Input3.txt", 0
 	   69 76 61 74 65
 	   5C 46 69 6C 65
 	   5C BF CE B3 CC
@@ -48,18 +48,18 @@ Sort.asm						     Page 1 - 1
 	   5C 49 6E 70 75
 	   74 33 2E 74 78
 	   74 00
- 00000241 00000000		FileHandle  	DD 		?
- 00000245 00000000		StdOutHandle 	DD 		?
- 00000249 65 72 72 6F 72	ErrorMessage 	BYTE 	"error", 0
+ 00000179 00000000		FileHandle  	DD 		?
+ 0000017D 00000000		StdOutHandle 	DD 		?
+ 00000181 65 72 72 6F 72	ErrorMessage 	BYTE 	"error", 0
 	   00
- 0000024F 00000000		BytesRead 		DD 		?
- 00000253 00000000		BytesWritten 	DD 		?
- 00000257  00000064 [		Array 			DD 		ArraySize DUP(?)
+ 00000187 00000000		BytesRead 		DD 		?
+ 0000018B 00000000		BytesWritten 	DD 		?
+ 0000018F  00000064 [		Array 			DD 		ArraySize DUP(?)
 	    00000000
 	   ]
- 000003E7 00000000		Number 			DD 		?
- 000003EB 20 00			Space 			DB 		" ", 0
- 000003ED 2D 00			Minus 			DB		"-", 0
+ 0000031F 00000000		Number 			DD 		?
+ 00000323 20 00			Space 			DB 		" ", 0
+ 00000325 2D 00			Minus 			DB		"-", 0
 
  00000000			.code
  00000000			main PROC
@@ -72,7 +72,7 @@ Sort.asm						     Page 1 - 1
 						OPEN_EXISTING,							; 打开现有文件
 						FILE_ATTRIBUTE_NORMAL,
 						0
- 0000001D  A3 00000241 R		MOV FileHandle, eax							; 保留文件句柄
+ 0000001D  A3 00000179 R		MOV FileHandle, eax							; 保留文件句柄
  00000022  83 F8 FF			cmp eax, INVALID_HANDLE_VALUE				; 判断文件句柄是否合法
  00000025  0F 84 0000013A		JZ Error									; 跳转报错
 					INVOKE ReadFile,							; 读文件
@@ -81,13 +81,13 @@ Sort.asm						     Page 1 - 1
 						BufferSize,
 						ADDR BytesRead,							; 实际读字节数
 						0
- 00000047  8B 0D 0000024F R		MOV ecx, BytesRead							; ecx <- 字节数
+ 00000047  8B 0D 00000187 R		MOV ecx, BytesRead							; ecx <- 字节数
  0000004D  BE 00000000 R		MOV esi, OFFSET Buffer						; esi <- Buffer 首地址
  00000052  BB 00000000			MOV ebx, 0									; ebx <- 0
  00000057  BA 00000000			MOV edx, 0									; edx <- 0 (Positive)
- 0000005C  BF 000003E7 R		MOV edi, OFFSET Number						; edi <- 全局变量地址：数字总数
+ 0000005C  BF 0000031F R		MOV edi, OFFSET Number						; edi <- 全局变量地址：数字总数
  00000061  89 17			MOV [edi], edx								; Number <- edx(0)
- 00000063  BF 00000257 R		MOV edi, OFFSET Array						; 数组位置
+ 00000063  BF 0000018F R		MOV edi, OFFSET Array						; 数组位置
 
  00000068			GetChar:										; 循环读入字符
  00000068  80 3E 20			CMP BYTE PTR [esi], 20H						; ' '
@@ -113,10 +113,10 @@ Sort.asm						     Page 1 - 1
  00000094  E2 D2			LOOP GetChar
  00000096  E8 0000009C			CALL AssignToArray
 
- 0000009B  B9 000003E7 R		MOV ecx, OFFSET Number
+ 0000009B  B9 0000031F R		MOV ecx, OFFSET Number
  000000A0  8B 09			MOV ecx, [ecx]
  000000A2  83 E9 01			SUB ecx, 1									; i = Number - 1
- 000000A5  BE 00000257 R		MOV esi, OFFSET Array						; esi <- 数组地址
+ 000000A5  BE 0000018F R		MOV esi, OFFSET Array						; esi <- 数组地址
  000000AA			Loop_I:
  000000AA  51				PUSH ecx									; 保护外层循环
  000000AB  56				PUSH esi
@@ -132,8 +132,8 @@ Sort.asm						     Page 1 - 1
  000000BE  59				POP ecx
  000000BF  E2 E9			LOOP Loop_I
 
- 000000C1  BE 00000257 R		MOV esi, OFFSET Array						; esi <- 数组地址
- 000000C6  B9 000003E7 R		MOV ecx, OFFSET Number
+ 000000C1  BE 0000018F R		MOV esi, OFFSET Array						; esi <- 数组地址
+ 000000C6  B9 0000031F R		MOV ecx, OFFSET Number
  000000CB  8B 09			MOV ecx, [ecx]
  000000CD			Loop_Print:
  000000CD  8B 06			MOV eax, [esi]								; eax <- [esi]
@@ -141,7 +141,7 @@ Sort.asm						     Page 1 - 1
  000000D2  79 2B			JNS Print									; S = 0 (Positive)
  000000D4  50				PUSH eax
 					INVOKE GetStdHandle, STD_OUTPUT_HANDLE		; 获取标准输出句柄
- 000000DC  A3 00000245 R	    MOV StdOutHandle, eax
+ 000000DC  A3 0000017D R	    MOV StdOutHandle, eax
  000000E1  60			    PUSHAD
 				    INVOKE WriteConsole,                    	; 向控制台输出‘-’
 				        StdOutHandle,
@@ -155,7 +155,7 @@ Sort.asm						     Page 1 - 1
  000000FF			Print:
  000000FF  E8 00000000 E		CALL WriteDec
 					INVOKE GetStdHandle, STD_OUTPUT_HANDLE		; 获取标准输出句柄
- 0000010B  A3 00000245 R	    MOV StdOutHandle, eax
+ 0000010B  A3 0000017D R	    MOV StdOutHandle, eax
  00000110  60			    PUSHAD
 				    INVOKE WriteConsole,                    	; 向控制台输出空格
 				        StdOutHandle,
@@ -166,7 +166,7 @@ Sort.asm						     Page 1 - 1
  0000012A  61				POPAD
  0000012B  83 C6 04			ADD esi, TYPE Array							; i++
  0000012E  E2 9D			LOOP Loop_Print
-					INVOKE ExitProcess,0
+					INVOKE ExitProcess, 0
  00000137			main ENDP
 
 				;--------------------------------------------------------
@@ -181,7 +181,7 @@ Sort.asm						     Page 1 - 1
  0000013E			Assign:
  0000013E  89 1F			MOV [edi], ebx								; *edi <- ebx
  00000140  83 C7 04			ADD edi, TYPE Array							; edi++
- 00000143  BB 000003E7 R		MOV ebx, OFFSET Number
+ 00000143  BB 0000031F R		MOV ebx, OFFSET Number
  00000148  BA 00000001			MOV edx, 1
  0000014D  01 13			ADD [ebx], edx								; *ebx++
  0000014F  BB 00000000			MOV ebx, 0									; ebx <- 0
@@ -194,7 +194,7 @@ Sort.asm						     Page 1 - 1
 				; 交换[esi]与[esi + 4]
 				; @Receives: [esi], [esi + 4]
 				; @Returns: none
-;--------------------------------------------------------
+				;--------------------------------------------------------
  0000015A  8B 06			MOV eax, [esi]
  0000015C  8B 5E 04			MOV ebx, [esi + 4]
  0000015F  89 1E			MOV [esi], ebx
@@ -204,7 +204,7 @@ Sort.asm						     Page 1 - 1
 
  00000165			Error:
 					INVOKE GetStdHandle, STD_OUTPUT_HANDLE		; 获取标准输出句柄
- 0000016C  A3 00000245 R	    MOV StdOutHandle, eax
+ 0000016C  A3 0000017D R	    MOV StdOutHandle, eax
  00000171  60			    PUSHAD
 				    INVOKE WriteConsole,                        ; 打印报错信息
 						StdOutHandle,
@@ -216,7 +216,7 @@ Sort.asm						     Page 1 - 1
  0000018C  58				POP eax
 					INVOKE ExitProcess, 0
 				END main
-Microsoft (R) Macro Assembler Version 14.16.27034.0	    11/27/19 18:22:59
+Microsoft (R) Macro Assembler Version 14.16.27034.0	    11/27/19 19:12:58
 Sort.asm						     Symbols 2 - 1
 
 
@@ -328,7 +328,7 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 000003EF Para	  Public  'DATA'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000327 Para	  Public  'DATA'	
 _TEXT  . . . . . . . . . . . . .	32 Bit	 00000194 Para	  Public  'CODE'	
 
 
@@ -469,11 +469,11 @@ Symbols:
 @stack . . . . . . . . . . . . .	Text   	 FLAT
 ALT_MASK . . . . . . . . . . . .	Number	 00000003h   
 ArraySize  . . . . . . . . . . .	Number	 00000064h   
-Array  . . . . . . . . . . . . .	DWord	 00000257 _DATA	
-BufferSize . . . . . . . . . . .	Number	 000001F4h   
+Array  . . . . . . . . . . . . .	DWord	 0000018F _DATA	
+BufferSize . . . . . . . . . . .	Number	 0000012Ch   
 Buffer . . . . . . . . . . . . .	Byte	 00000000 _DATA	
-BytesRead  . . . . . . . . . . .	DWord	 0000024F _DATA	
-BytesWritten . . . . . . . . . .	DWord	 00000253 _DATA	
+BytesRead  . . . . . . . . . . .	DWord	 00000187 _DATA	
+BytesWritten . . . . . . . . . .	DWord	 0000018B _DATA	
 CAPSLOCK_ON  . . . . . . . . . .	Number	 00000080h   
 CREATE_ALWAYS  . . . . . . . . .	Number	 00000002h   
 CREATE_NEW . . . . . . . . . . .	Number	 00000001h   
@@ -488,7 +488,7 @@ ENABLE_PROCESSED_OUTPUT  . . . .	Number	 00000001h
 ENABLE_WINDOW_INPUT  . . . . . .	Number	 00000008h   
 ENABLE_WRAP_AT_EOL_OUTPUT  . . .	Number	 00000002h   
 ENHANCED_KEY . . . . . . . . . .	Number	 00000100h   
-ErrorMessage . . . . . . . . . .	Byte	 00000249 _DATA	
+ErrorMessage . . . . . . . . . .	Byte	 00000181 _DATA	
 Error  . . . . . . . . . . . . .	L Near	 00000165 _TEXT	
 FALSE  . . . . . . . . . . . . .	Number	 00000000h   
 FILE_APPEND_DATA . . . . . . . .	Number	 00000004h   
@@ -518,7 +518,7 @@ FILE_WRITE_DATA  . . . . . . . .	Number	 00000002h
 FOCUS_EVENT  . . . . . . . . . .	Number	 00000010h   
 FORMAT_MESSAGE_ALLOCATE_BUFFER .	Number	 00000100h   
 FORMAT_MESSAGE_FROM_SYSTEM . . .	Number	 00001000h   
-FileHandle . . . . . . . . . . .	DWord	 00000241 _DATA	
+FileHandle . . . . . . . . . . .	DWord	 00000179 _DATA	
 FormatMessage  . . . . . . . . .	Text   	 FormatMessageA
 GENERIC_ALL  . . . . . . . . . .	Number	 10000000h   
 GENERIC_EXECUTE  . . . . . . . .	Number	 20000000h   
@@ -544,7 +544,7 @@ IDTIMEOUT  . . . . . . . . . . .	Number	 00007D00h
 IDTRYAGAIN . . . . . . . . . . .	Number	 0000000Ah   
 IDYES  . . . . . . . . . . . . .	Number	 00000006h   
 INVALID_HANDLE_VALUE . . . . . .	Number	 -00000001h   
-Infile . . . . . . . . . . . . .	Byte	 000001F4 _DATA	
+Infile . . . . . . . . . . . . .	Byte	 0000012C _DATA	
 KBDOWN_FLAG  . . . . . . . . . .	Number	 00000001h   
 KEY_EVENT  . . . . . . . . . . .	Number	 00000001h   
 KEY_MASKS  . . . . . . . . . . .	Number	 0000001Fh   
@@ -577,10 +577,10 @@ MB_YESNO . . . . . . . . . . . .	Number	 00000004h
 MENU_EVENT . . . . . . . . . . .	Number	 00000008h   
 MOUSE_EVENT  . . . . . . . . . .	Number	 00000002h   
 MessageBox . . . . . . . . . . .	Text   	 MessageBoxA
-Minus  . . . . . . . . . . . . .	Byte	 000003ED _DATA	
+Minus  . . . . . . . . . . . . .	Byte	 00000325 _DATA	
 NULL . . . . . . . . . . . . . .	Number	 00000000h   
 NUMLOCK_ON . . . . . . . . . . .	Number	 00000020h   
-Number . . . . . . . . . . . . .	DWord	 000003E7 _DATA	
+Number . . . . . . . . . . . . .	DWord	 0000031F _DATA	
 OPEN_ALWAYS  . . . . . . . . . .	Number	 00000004h   
 OPEN_EXISTING  . . . . . . . . .	Number	 00000003h   
 PeekConsoleInput . . . . . . . .	Text   	 PeekConsoleInputA
@@ -595,8 +595,8 @@ STD_ERROR_HANDLE . . . . . . . .	Number	 -0000000Ch
 STD_INPUT_HANDLE . . . . . . . .	Number	 -0000000Ah   
 STD_OUTPUT_HANDLE  . . . . . . .	Number	 -0000000Bh   
 SetConsoleTitle  . . . . . . . .	Text   	 SetConsoleTitleA
-Space  . . . . . . . . . . . . .	Byte	 000003EB _DATA	
-StdOutHandle . . . . . . . . . .	DWord	 00000245 _DATA	
+Space  . . . . . . . . . . . . .	Byte	 00000323 _DATA	
+StdOutHandle . . . . . . . . . .	DWord	 0000017D _DATA	
 TAB  . . . . . . . . . . . . . .	Number	 00000009h   
 TRUE . . . . . . . . . . . . . .	Number	 00000001h   
 TRUNCATE_EXISTING  . . . . . . .	Number	 00000005h   
