@@ -4,15 +4,15 @@ INCLUDE macros.inc
 BufferSize = 200
 
 .data
-Buffer              BYTE    BufferSize DUP(?)
-StdInHandle         HANDLE  ?
-OperatorStack       BYTE    BufferSize DUP(?)
+Buffer      BYTE    BufferSize DUP(?)
+StdInHandle HANDLE  ?
+OperatorStack    BYTE    BufferSize DUP(?)
 OperatorStackBase   DD      ?
-BytesRead           DWORD 	?
-Plus                DB      "+", 0
-Minus               DB      "-", 0
-LeftComma           DB      "(", 0
-RightComma          DB      ")", 0
+BytesRead   DWORD 	?
+Plus        DB      "+", 0
+Minus       DB      "-", 0
+LeftComma   DB      "(", 0
+RightComma  DB      ")", 0
 
 .code
 main PROC

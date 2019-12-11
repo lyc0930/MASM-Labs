@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27034.0	    12/11/19 18:17:33
+Microsoft (R) Macro Assembler Version 14.16.27034.0	    12/11/19 18:25:42
 Arithmetic.asm						     Page 1 - 1
 
 
@@ -32,10 +32,10 @@ Arithmetic.asm						     Page 1 - 1
 	    00
 	   ]
  000000C8 00000000		StdInHandle HANDLE  ?
- 000000CC  000000C8 [		Operator    BYTE    BufferSize DUP(?)
+ 000000CC  000000C8 [		OperatorStack    BYTE    BufferSize DUP(?)
 	    00
 	   ]
- 00000194 00000000		StackBase   DD      ?
+ 00000194 00000000		OperatorStackBase   DD      ?
  00000198 00000000		BytesRead   DWORD 	?
  0000019C 2B 00			Plus        DB      "+", 0
  0000019E 2D 00			Minus       DB      "-", 0
@@ -57,8 +57,8 @@ Arithmetic.asm						     Page 1 - 1
  00000031  B0 00			MOV al, 0                                   ; 0 <- Character | 1 <- Number
  00000033  B4 00			MOV ah, 0                                   ; 0 <- Minus | 1 <- Negative
  00000035  B3 00			MOV bl, 0                                   ; 0 <- Positive | 1 <- Negative
- 00000037  BF 000000CC R		MOV edi, OFFSET Operator
- 0000003C  BE 00000194 R		MOV esi, OFFSET StackBase
+ 00000037  BF 000000CC R		MOV edi, OFFSET OperatorStack
+ 0000003C  BE 00000194 R		MOV esi, OFFSET OperatorStackBase
  00000041  89 3E			MOV [esi], edi
  00000043  BE 00000000 R		MOV esi, OFFSET Buffer
 
@@ -73,7 +73,7 @@ Arithmetic.asm						     Page 1 - 1
  00000069  50								PUSH eax
  0000006A  8B C2							MOV eax, edx
 								.ENDIF
- 0000006C  BA 00000194 R					MOV edx, OFFSET StackBase
+ 0000006C  BA 00000194 R					MOV edx, OFFSET OperatorStackBase
  00000071  8B 12						MOV edx, [edx]
 								.IF (edx != edi)                ; ’ª∂•≤ªµ»”⁄’ªµ◊
  00000077  8A 17		                    MOV dl, [edi]               ; dl <- ’ª∂•
@@ -105,7 +105,7 @@ Arithmetic.asm						     Page 1 - 1
  000000C5  50							PUSH eax
  000000C6  8B C2						MOV eax, edx
 							.ENDIF
- 000000C8  BA 00000194 R				MOV edx, OFFSET StackBase
+ 000000C8  BA 00000194 R				MOV edx, OFFSET OperatorStackBase
  000000CD  8B 12					MOV edx, [edx]
 							.IF (edx != edi)                    ; ’ª∂•≤ªµ»”⁄’ªµ◊
  000000D3  8A 17						MOV dl, [edi]                   ; dl <- ’ª∂•
@@ -176,7 +176,7 @@ Arithmetic.asm						     Page 1 - 1
  0000017C  46					inc esi                                 ; esi++
  0000017D  49					dec ecx                                 ; ecx--
 					.ENDW
- 00000187  BA 00000194 R		MOV edx, OFFSET StackBase
+ 00000187  BA 00000194 R		MOV edx, OFFSET OperatorStackBase
  0000018C  8B 12			MOV edx, [edx]
 					.WHILE (edi > edx)                           ; ÷±÷¡’ªø’
  00000190  8A 07				MOV al, [edi]
@@ -193,7 +193,7 @@ Arithmetic.asm						     Page 1 - 1
 					INVOKE ExitProcess, 0
  000001B7			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.16.27034.0	    12/11/19 18:17:33
+Microsoft (R) Macro Assembler Version 14.16.27034.0	    12/11/19 18:25:42
 Arithmetic.asm						     Symbols 2 - 1
 
 
@@ -541,7 +541,8 @@ NULL . . . . . . . . . . . . . .	Number	 00000000h
 NUMLOCK_ON . . . . . . . . . . .	Number	 00000020h   
 OPEN_ALWAYS  . . . . . . . . . .	Number	 00000004h   
 OPEN_EXISTING  . . . . . . . . .	Number	 00000003h   
-Operator . . . . . . . . . . . .	Byte	 000000CC _DATA	
+OperatorStackBase  . . . . . . .	DWord	 00000194 _DATA	
+OperatorStack  . . . . . . . . .	Byte	 000000CC _DATA	
 PeekConsoleInput . . . . . . . .	Text   	 PeekConsoleInputA
 Plus . . . . . . . . . . . . . .	Byte	 0000019C _DATA	
 RIGHT_ALT_PRESSED  . . . . . . .	Number	 00000001h   
@@ -556,7 +557,6 @@ STD_ERROR_HANDLE . . . . . . . .	Number	 -0000000Ch
 STD_INPUT_HANDLE . . . . . . . .	Number	 -0000000Ah   
 STD_OUTPUT_HANDLE  . . . . . . .	Number	 -0000000Bh   
 SetConsoleTitle  . . . . . . . .	Text   	 SetConsoleTitleA
-StackBase  . . . . . . . . . . .	DWord	 00000194 _DATA	
 StdInHandle  . . . . . . . . . .	DWord	 000000C8 _DATA	
 TAB  . . . . . . . . . . . . . .	Number	 00000009h   
 TRUE . . . . . . . . . . . . . .	Number	 00000001h   
