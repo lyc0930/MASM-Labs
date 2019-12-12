@@ -4,15 +4,15 @@ INCLUDE macros.inc
 BufferSize = 200
 
 .data
-Buffer      BYTE    BufferSize DUP(?)
-StdInHandle HANDLE  ?
-OperatorStack    BYTE    BufferSize DUP(?)
+Buffer      		BYTE    BufferSize DUP(?)
+StdInHandle 		HANDLE  ?
+OperatorStack    	BYTE    BufferSize DUP(?)
 OperatorStackBase   DD      ?
-BytesRead   DWORD 	?
-Plus        DB      "+", 0
-Minus       DB      "-", 0
-LeftComma   DB      "(", 0
-RightComma  DB      ")", 0
+BytesRead   		DWORD 	?
+Plus        		DB      "+", 0
+Minus       		DB      "-", 0
+LeftComma   		DB      "(", 0
+RightComma  		DB      ")", 0
 
 .code
 main PROC
@@ -59,7 +59,7 @@ main PROC
 						DEC edi                 ; ’ª∂•÷∏’Îœ¬“∆
 					.ENDIF
 				.ENDIF
-				inc edi                         ; ∑˚∫≈»Î’ª
+				INC edi                         ; ∑˚∫≈»Î’ª
 				MOV [edi], BYTE PTR 2DH         ; '-'
                 MOV al, 0                       ; Character
 				MOV ah, 1                       ; Minus
@@ -91,7 +91,7 @@ main PROC
 					DEC edi                     ; ’ª∂•÷∏’Îœ¬“∆
 				.ENDIF
 			.ENDIF
-			inc edi                             ; ∑˚∫≈»Î’ª
+			INC edi                             ; ∑˚∫≈»Î’ª
 			MOV [edi], BYTE PTR 2BH             ; '+'
             MOV al, 0                           ; Character
             MOV ah, 1                           ; Minus
@@ -145,8 +145,8 @@ main PROC
 			MOV al, 1                           ; Number
 			MOV ah, 0                           ; Minus
 		.ENDIF
-		inc esi                                 ; esi++
-		dec ecx                                 ; ecx--
+		INC esi                                 ; esi++
+		DEC ecx                                 ; ecx--
 	.ENDW
 	MOV edx, OFFSET OperatorStackBase
 	MOV edx, [edx]

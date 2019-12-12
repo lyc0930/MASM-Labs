@@ -1,5 +1,5 @@
-INCLUDE     irvine32.INC
-INCLUDE     macros.INC
+INCLUDE     irvine32.inc
+INCLUDE     macros.inc
 
 BufferSize = 200
 
@@ -87,7 +87,7 @@ My_ReadFloat PROC
     JNE     Negative_Q
     MOV     al, BYTE PTR [edx]
     INC     edx
-    jmp     Number
+    JMP     Number
 Negative_Q:
     CMP     al, '-'
     JNE     Number
@@ -102,7 +102,7 @@ Number:
             AND     eax, 0Fh
             MOV     Temp, eax
             FMUL    Ten                             ; Temp *= 10
-            fild    Temp
+            FILD    Temp
             FADD
             MOV     al, BYTE PTR [edx]
             INC     edx
@@ -117,7 +117,7 @@ Number:
                 SUB     al, '0'
                 AND     eax, 0Fh
                 MOV     Temp, eax
-                fild    Temp
+                FILD    Temp
                 fdiv    Power                      ; Temp /= Power
                 FADD
                 FLD     Power
